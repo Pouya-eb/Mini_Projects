@@ -1,7 +1,10 @@
 import random
 import string
+import nltk
 from abc import ABC, abstractmethod
 
+
+# nltk.download('words') # Uncomment to download the words
 
 class PasswordGenerator(ABC):
 
@@ -49,6 +52,33 @@ class RandomPasswordGenerator(PasswordGenerator):
         return ''.join(random.choice(self.charcters) for i in range(self.length))
     
 
+class MemorablePasswordGenerator(PasswordGenerator):
+    """Class to generate a memorable password
+    """
+    def __init__(
+        self, 
+        no_of_words: int=4, 
+        sep: str=' ', 
+        capitalization: bool=False, 
+        vocabulary = nltk.corpus.words.words()
+        ) -> None:
+        
+        self.no_of_words = no_of_words
+        self.sep = sep
+        self.capitalization = capitalization
+        self.vocabulary = vocabulary
+        
+    def generate(self) -> str:
+        """Method to generate a memorable password
+
+        :return: memorable password
+        """        
+        password = [random.choice(self.vocabulary) for _ in range(self.no_of_words)]
+        if self.capitalization:
+            password = [word.upper() for word in password]
+        return self.sep.join(password)
+    
+
 if __name__ == '__main__':
     p1 = PinCodeGenerator(length=10)
     print(f'Your password is: {p1.generate()}')
@@ -59,3 +89,10 @@ if __name__ == '__main__':
         include_symbols=True
         )
     print(f'Your password is: {p2.generate()}')
+
+    p3 = MemorablePasswordGenerator(
+        no_of_words=4, 
+        sep='*', 
+        capitalization=True
+        )
+    print(f'Your password is: {p3.generate()}')
