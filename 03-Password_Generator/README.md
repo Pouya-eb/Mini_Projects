@@ -23,7 +23,9 @@ Each generator class inherits from a base `PasswordGenerator` class. They each o
 ```
 03-password_generator/
 |-- src/
-| |-- main.py
+| |-- password_generator.py
+| |-- dashboard.py
+|-- requirements.txt
 |-- README.md
 ```
 
@@ -31,11 +33,12 @@ Each generator class inherits from a base `PasswordGenerator` class. They each o
 
 - Python 3.7+
 - NLTK (Natural Language Toolkit)
+- Streamlit (for using dashboard)
 
-To install NLTK, use pip:
+To install the requirements, use pip:
 
 ```bash
-pip install nltk
+pip install -r requirements.txt
 ```
 
 After installing NLTK, you need to download the 'words' corpus uncomment the following in the code:
@@ -48,11 +51,22 @@ That's all you need to know to get started with this project. Enjoy generating p
 
 ## How to Run
 
-Make sure you've installed all the required dependencies. You can then set your PYTHONPATH, navigate to the 'src' directory and run the project using Python:
+Make sure you've installed all the required dependencies. You can then set your PYTHONPATH using:
 
 ```bash
 export PYTHONPATH="${PYTHONPATH}:/your/path/to/main/directory"
-python src/main.py
 ```
 
 Be sure to replace `/your/path/to/main/directory` with the actual path to the directory containing your project.
+
+Run the project using Python:
+
+```bash
+python src/password_generator.py
+```
+
+or use the following command to use dashboard:
+
+```bash
+streamlit run src/dashboard.py
+```
