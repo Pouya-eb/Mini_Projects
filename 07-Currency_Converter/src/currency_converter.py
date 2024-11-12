@@ -1,5 +1,9 @@
 import requests
+from cachetools import cached, TTLCache
 
+cache = TTLCache(maxsize=100, ttl=300)
+
+@cached(cache)
 def get_exchange_rate(base_currency: str, quote_currency: str) -> float:
     """Function for getting exchange rate using API
 
@@ -11,7 +15,7 @@ def get_exchange_rate(base_currency: str, quote_currency: str) -> float:
     response = requests.get(url=url)
     if response.status_code != 200:
         return None
-    return response.json()['rates'][quote_currency]
+    return response.json()['rates'][quote_currency], response.json()['time_last_update_unix']
 
 
 def convert_currency(amount: float, exchange_rate: float) -> float:
